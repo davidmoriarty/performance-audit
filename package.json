@@ -1,0 +1,20 @@
+{
+  "name": "performance-audit",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Run and store Lighthouse performance audits across multiple projects.",
+  "scripts": {
+    "audit": "tsx src/audit.ts",
+    "audit:bun": "bun src/audit.ts",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "chrome-launcher": "^1.2.1",
+    "lighthouse": "^13.4.1",
+    "tsx": "^4.23.1",
+    "typescript": "^7.0.2"
+  }
+}
