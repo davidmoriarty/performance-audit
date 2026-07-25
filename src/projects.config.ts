@@ -15,7 +15,7 @@ const projects = {
   },
   "task-ledger": {
     name: "Task Ledger",
-    url: "https://task-ledger.davidmoriarty.dev",
+    url: "https://task-ledger.davidmoriarty.dev/ui/login",
     root: "../task-ledger",
   },
   "task-manager": {
