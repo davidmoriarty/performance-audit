@@ -1,9 +1,9 @@
 # Performance Audit
 
-![TypeScript](https://img.shields.io/badge/TypeScript-100%25-blue)
-![License](https://img.shields.io/github/license/davidmoriarty/performance-audit)
-![GitHub Release](https://img.shields.io/github/v/release/davidmoriarty/performance-audit)
-![GitHub last commit](https://img.shields.io/github/last-commit/davidmoriarty/performance-audit)
+[![GitHub Release](https://img.shields.io/github/v/release/davidmoriarty/performance-audit)](https://github.com/davidmoriarty/performance-audit/releases/latest)
+[![License](https://img.shields.io/github/license/davidmoriarty/performance-audit)](./LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-100%25-3178c6)](https://www.typescriptlang.org/)
+[![Last Commit](https://img.shields.io/github/last-commit/davidmoriarty/performance-audit)](https://github.com/davidmoriarty/performance-audit/commits/main)
 
 A TypeScript CLI for running Lighthouse audits against one or more web applications.
 
