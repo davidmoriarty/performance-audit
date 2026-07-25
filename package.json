@@ -3,7 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Run and store Lighthouse performance audits across multiple projects.",
+  "description": "Reusable Lighthouse-based performance auditing toolkit.",
+  "author": "David Moriarty",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidmoriarty/performance-audit.git"
+  },
+  "homepage": "https://github.com/davidmoriarty/performance-audit",
+  "bugs": {
+    "url": "https://github.com/davidmoriarty/performance-audit/issues"
+  },
+  "license": "MIT",
+  "keywords": [
+    "performance",
+    "lighthouse",
+    "audit",
+    "typescript",
+    "web",
+    "cli"
+  ],
   "scripts": {
     "audit": "tsx src/audit.ts",
     "audit:bun": "bun src/audit.ts",
