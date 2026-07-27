@@ -123,7 +123,7 @@ async function runLighthouse(
 
     chrome = await launch({
       chromePath,
-      chromeFlags: ["--headless"],
+      chromeFlags: ["--headless=new"],
     });
 
     const result = await lighthouse(project.url, {
@@ -249,7 +249,7 @@ async function saveReports(
     fs.writeFile(
       reportPaths.json,
       reports.jsonReport,
-      "utf8"
+      "utf8",
     ),
     fs.writeFile(
       reportPaths.summary,
