@@ -1,5 +1,6 @@
 // src/audit.ts
 
+import "dotenv/config";
 import fs from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
@@ -114,8 +115,14 @@ async function runLighthouse(
   try {
     const chromePath = process.env.CHROME_PATH;
 
+    if (!chromePath) {
+      throw new Error(
+        "CHROME_PATH is not configured. See .env.example."
+      );
+    }
+
     chrome = await launch({
-      ...(chromePath ? { chromePath } : {}),
+      chromePath,
       chromeFlags: ["--headless"],
     });
 
