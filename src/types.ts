@@ -27,6 +27,7 @@ export interface AuditMetrics {
 export interface AuditSummary {
   version: 1;
   lighthouseVersion: string;
+  chromeFlags: string[];
   projectKey: string;
   projectName: string;
   url: string;

@@ -4,10 +4,8 @@ import "dotenv/config";
 import fs from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
-
 import { type LaunchedChrome, launch } from "chrome-launcher";
 import lighthouse from "lighthouse";
-
 import projects from "./projects.config.js";
 
 import type {
@@ -31,7 +29,16 @@ function round(value: number, decimals = 2): number {
 function printUsage(): void {
   console.log(`
 Usage:
-  npm run audit -- <project>
+  npm run audit -- <project> [options]
+
+Options:
+  --headful                 Launch Chrome without headless mode
+  --chrome-flags="<flags>"  Override the default Chrome launch flags
+
+Examples:
+  npm run audit -- note-manager
+  npm run audit -- note-manager --headful
+  npm run audit -- note-manager --chrome-flags="--disable-extensions"
 
 Available projects:
 ${Object.keys(projects)
@@ -106,6 +113,28 @@ function requireNumber(
   return value;
 }
 
+function getChromeFlags(): string[] {
+  const args = process.argv.slice(3);
+
+  if (args.includes("--headful")) {
+    return [];
+  }
+
+  const chromeFlagsArgument = args.find((argument) =>
+    argument.startsWith("--chrome-flags="),
+  );
+
+  if (!chromeFlagsArgument) {
+    return ["--headless=new"];
+  }
+
+  const chromeFlags = chromeFlagsArgument
+    .slice("--chrome-flags=".length)
+    .trim();
+
+  return chromeFlags ? chromeFlags.split(/\s+/) : [];
+}
+
 async function runLighthouse(
   projectKey: string,
   project: ProjectConfig,
@@ -114,6 +143,7 @@ async function runLighthouse(
 
   try {
     const chromePath = process.env.CHROME_PATH;
+    const chromeFlags = getChromeFlags();
 
     if (!chromePath) {
       throw new Error(
@@ -123,7 +153,7 @@ async function runLighthouse(
 
     chrome = await launch({
       chromePath,
-      chromeFlags: ["--headless=new"],
+      chromeFlags,
     });
 
     const result = await lighthouse(project.url, {
@@ -156,6 +186,7 @@ async function runLighthouse(
     const summary: AuditSummary = {
       version: 1,
       lighthouseVersion: lhr.lighthouseVersion,
+      chromeFlags: chromeFlags,
       projectKey,
       projectName: project.name,
       url: project.url,

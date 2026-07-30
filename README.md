@@ -33,6 +33,7 @@ The long-term goal is to provide:
 - HTML + JSON output
 - Machine-readable summaries
 - Configurable project list
+- Configurable Chrome launch flags
 - Works with any public website
 
 ## Installation
@@ -47,6 +48,22 @@ Audit a project:
 
 ```bash
 npm run audit -- task-ledger
+```
+
+Run in headful mode:
+
+```bash
+
+npm run audit -- task-ledger --headful
+
+```
+
+Override the default Chrome launch flags:
+
+```bash
+
+npm run audit -- task-ledger --chrome-flags="--disable-extensions"
+
 ```
 
 Compile the project:
@@ -102,12 +119,46 @@ The summary contains:
 - Core Web Vitals
 - Performance metrics
 
+## Known Limitations
+
+### CDN and Security Middleware
+
+When auditing sites protected by Cloudflare or similar security middleware, Lighthouse CLI may trigger additional JavaScript challenge or bot-detection scripts. These scripts can significantly increase JavaScript execution time and Total Blocking Time (TBT), resulting in lower Performance scores than those obtained from interactive browser audits.
+
+- The application itself may not be responsible for the additional scripting time.
+- Check the Long Tasks and Bootup Time audits.
+- If `/cdn-cgi/challenge-platform/scripts/jsd/main.js` dominates those sections, the reported Performance score reflects Cloudflare’s challenge script rather than the application bundle.
+- Accessibility, Best Practices, and SEO scores are generally unaffected.
+
+```plaintext
+Long Tasks (example)
+
+1253 ms  Cloudflare challenge
+ 232 ms  Application bundle
+```
+
+In these cases, inspect the Long Tasks and Bootup Time audits before optimizing application code, as the largest performance cost may originate from infrastructure rather than the application itself.
+
+## Troubleshooting
+
+### Performance score is much lower than Chrome DevTools
+
+Possible causes:
+
+- Cloudflare JavaScript challenge
+- Browser extensions or injected scripts
+- Different Lighthouse throttling settings
+- CDN cache warming
+- Third-party analytics or monitoring scripts
+
+
 ## Roadmap
 
 Planned features include:
 
 - HTML dashboard
-- Historical trend graphs
+- Historical trend analysis
+- Performance attribution summary
 - Project comparisons
 - Desktop audits
 - CI/CD integration
